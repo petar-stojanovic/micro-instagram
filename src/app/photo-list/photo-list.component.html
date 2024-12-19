@@ -1,1 +1,27 @@
-<p>photo-list works!</p>
+@if (photos.length === 0) {
+  Loading...
+} @else {
+
+  <table mat-table [dataSource]="photos" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No.</th>
+      <td mat-cell *matCellDef="let photo"> {{ photo.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let photo"> {{ photo.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="thumbnailUrl">
+      <th mat-header-cell *matHeaderCellDef> Weight</th>
+      <td mat-cell *matCellDef="let photo"> {{ photo.thumbnailUrl }}</td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+}
