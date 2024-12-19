@@ -1,10 +1,15 @@
 import {Routes} from '@angular/router';
-import {AllPhotosComponent} from './all-photos/all-photos.component';
+import {PhotoListComponent} from './photo-list/photo-list.component';
+import {PhotoDetailsComponent} from './photo-details/photo-details.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: AllPhotosComponent
+    component: PhotoListComponent
+  },
+  {
+    path: 'photo/:id',
+    component: PhotoDetailsComponent
   },
   {
     path: '**', redirectTo: ''
