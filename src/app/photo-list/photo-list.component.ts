@@ -1,18 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PhotoService} from '../services/photo.service';
 import {Photo} from '../interfaces/photo';
 import {MatTableModule} from '@angular/material/table';
+import {RouterLink} from '@angular/router';
+import {Observable, tap} from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-photo-list',
   imports: [
-    MatTableModule
+    MatTableModule,
+    RouterLink,
+    AsyncPipe,
+    MatProgressSpinner
   ],
   templateUrl: './photo-list.component.html',
   styleUrl: './photo-list.component.scss'
 })
-export class PhotoListComponent {
-  photos: Photo[] = [];
+export class PhotoListComponent implements OnInit {
+  photos$!: Observable<Photo[]>;
+
   displayedColumns = [
     'id',
     'title',
@@ -20,11 +28,14 @@ export class PhotoListComponent {
   ]
 
   constructor(private photoService: PhotoService) {
-    this.photoService.photos$.subscribe((photos) => {
-      this.photos = photos
-      console.log(this.photos)
-    })
+    this.photos$ = this.photoService.photos$.pipe(
+      tap(photos => {
+        console.log(photos)
+      })
+    )
+  }
 
+  ngOnInit() {
     this.photoService.loadPhotos();
   }
 }

@@ -1,3 +1,21 @@
 table {
   width: 100%;
+  position: relative;
+}
+
+.thumbnail {
+  max-width: 3rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+tr:hover {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+mat-spinner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: -50%, -50%;
 }
