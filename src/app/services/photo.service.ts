@@ -16,6 +16,9 @@ export class PhotoService {
   }
 
   loadPhotos() {
+    if (this.photosSubject.getValue().length) {
+      return;
+    }
     this.http.get<Photo[]>(this.URL).subscribe(photos => this.photosSubject.next(photos.slice(0, 50)));
   }
 
