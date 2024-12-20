@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, tap} from 'rxjs';
 import {Photo} from '../interfaces/photo';
 
 @Injectable({
@@ -27,6 +27,12 @@ export class PhotoService {
   }
 
   deletePhoto(id: number) {
-    return this.http.delete<Photo>(`${this.URL}/${id}/delete`);
+    return this.http.delete<Photo>(`${this.URL}/${id}`).pipe(
+      tap(() => {
+        const photos = this.photosSubject.getValue();
+        const filteredPhotos = photos.filter(photo => photo.id !== id);
+        this.photosSubject.next(filteredPhotos);
+      })
+    );
   }
 }

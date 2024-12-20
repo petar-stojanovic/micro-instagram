@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {PhotoService} from '../../services/photo.service';
@@ -8,11 +8,11 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDeleteDialog} from '../../shared/confirm-delete-dialog/confirm-delete-dialog';
 import {catchError, EMPTY} from 'rxjs';
-import {JsonPipe} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-photo-details',
-  imports: [MatCardModule, MatButtonModule, MatProgressSpinner, JsonPipe, RouterLink],
+  imports: [MatCardModule, MatButtonModule, MatProgressSpinner, RouterLink],
   templateUrl: './photo-details.component.html',
   styleUrl: './photo-details.component.scss'
 })
@@ -22,7 +22,8 @@ export class PhotoDetailsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   error = false;
 
-  constructor(private route: ActivatedRoute, private photoService: PhotoService) {
+  constructor(private route: ActivatedRoute, private photoService: PhotoService,
+              private router: Router, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -42,15 +43,17 @@ export class PhotoDetailsComponent implements OnInit {
   }
 
   deleteImage() {
-    const dialog = this.dialog.open(ConfirmDeleteDialog, {
-      // width: '250px',
-    });
+    const dialog = this.dialog.open(ConfirmDeleteDialog);
 
     dialog.afterClosed().subscribe(result => {
-      console.log("Dialog result: ", result);
-      this.photoService.deletePhoto(this.photo!.id).subscribe(() => {
-        console.log("Photo deleted");
-      });
+      if (result) {
+        this.photoService.deletePhoto(this.photo!.id).subscribe(() => {
+          this.snackBar.open("Photo successfully deleted", "Close", {
+            duration: 2000,
+          });
+          this.router.navigate(["/"]);
+        });
+      }
     })
   }
 }
