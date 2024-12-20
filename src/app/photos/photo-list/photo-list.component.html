@@ -1,6 +1,9 @@
 <h1 class="header">
   <span>Photo List</span>
-  <button mat-raised-button color="accent" [routerLink]="['/photo', 'create']">Add New Photo</button>
+
+  <a [routerLink]="['/photo', 'create']">
+    <button mat-raised-button color="accent">Add New Photo</button>
+  </a>
 </h1>
 
 @if (photos$ | async; as photos) {
