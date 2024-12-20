@@ -16,13 +16,17 @@
   background-color: rgba(241, 241, 241, 0.5);
 }
 
+.avatar {
+  background-color: rgba(241, 241, 241, 0.5);
+  border: 1px solid rgb(225, 225, 225);
+}
+
 mat-spinner {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 mat-card-content {
   margin-top: 1rem;
