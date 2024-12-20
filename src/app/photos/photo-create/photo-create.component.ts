@@ -10,11 +10,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Photo} from '../../interfaces/photo';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {forkJoin, switchMap} from 'rxjs';
+import {catchError, forkJoin, switchMap} from 'rxjs';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-photo-create',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, RouterLink],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatInputModule, MatSelectModule, MatButtonModule, RouterLink],
   templateUrl: './photo-create.component.html',
   styleUrl: './photo-create.component.scss'
 })
@@ -24,6 +25,7 @@ export class PhotoCreateComponent implements OnInit {
   albums: Album[] = [];
   isEditMode = false;
   photoId: number | undefined;
+  error = false;
 
   constructor(private fb: FormBuilder,
               private photoService: PhotoService,
@@ -87,9 +89,16 @@ export class PhotoCreateComponent implements OnInit {
     forkJoin({
       photo: this.photoService.getPhoto(photoId),
       albums: this.albumService.getAll(),
-    }).subscribe(({photo, albums}) => {
-      this.albums = albums;
-      this.form.patchValue(photo);
-    });
+    })
+      .pipe(
+        catchError(_ => {
+          this.error = true;
+          return [];
+        })
+      )
+      .subscribe(({photo, albums}) => {
+        this.albums = albums;
+        this.form.patchValue(photo);
+      });
   }
 }

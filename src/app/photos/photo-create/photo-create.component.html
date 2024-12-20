@@ -8,53 +8,70 @@
 
 <div class="photo-create-container">
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <mat-label>Photo Title</mat-label>
-      <input matInput formControlName="title" placeholder="Enter photo title"/>
-      @if (form.get('title')?.hasError('required')) {
-        <mat-error>Title is required.</mat-error>
-      }
-    </mat-form-field>
+  @if (error) {
+    <mat-card class="card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Error</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          There was an error loading the photo.
+        </p>
+        <p>
+          <button mat-button color="primary" routerLink="/">Go Back</button>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
 
-    <mat-form-field>
-      <mat-label>Photo URL</mat-label>
-      <input matInput formControlName="url" placeholder="Enter photo URL"/>
-      @if (form.get('url')?.hasError('required')) {
-        <mat-error>URL is required.</mat-error>
-      }
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Thumbnail URL</mat-label>
-      <input matInput formControlName="thumbnailUrl" placeholder="Enter thumbnail URL"/>
-
-      @if (form.get('thumbnailUrl')?.hasError('required')) {
-        <mat-error>Thumbnail URL is required.</mat-error>
-      }
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Select Album</mat-label>
-      <mat-select formControlName="albumId">
-        <mat-option value="">--</mat-option>
-        @for (album of albums; track album.id) {
-          <mat-option value="{{ album.id }}">{{ album.title }}</mat-option>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Photo Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter photo title"/>
+        @if (form.get('title')?.hasError('required')) {
+          <mat-error>Title is required.</mat-error>
         }
-      </mat-select>
-    </mat-form-field>
+      </mat-form-field>
 
-    <div class="button-container">
-      <button mat-raised-button routerLink="/">
-        Go Back
-      </button>
-      <button mat-raised-button color="primary" [disabled]="form.invalid">
-        @if (isEditMode) {
-          Edit Photo
-        } @else {
-          Add Photo
+      <mat-form-field>
+        <mat-label>Photo URL</mat-label>
+        <input matInput formControlName="url" placeholder="Enter photo URL"/>
+        @if (form.get('url')?.hasError('required')) {
+          <mat-error>URL is required.</mat-error>
         }
-      </button>
-    </div>
-  </form>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Thumbnail URL</mat-label>
+        <input matInput formControlName="thumbnailUrl" placeholder="Enter thumbnail URL"/>
+
+        @if (form.get('thumbnailUrl')?.hasError('required')) {
+          <mat-error>Thumbnail URL is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Album</mat-label>
+        <mat-select formControlName="albumId">
+          <mat-option value="">--</mat-option>
+          @for (album of albums; track album.id) {
+            <mat-option value="{{ album.id }}">{{ album.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-raised-button routerLink="/">
+          Go Back
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          @if (isEditMode) {
+            Edit Photo
+          } @else {
+            Add Photo
+          }
+        </button>
+      </div>
+    </form>
+  }
 </div>
