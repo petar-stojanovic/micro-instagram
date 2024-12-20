@@ -15,6 +15,10 @@ export class PhotoService {
   constructor(private http: HttpClient) {
   }
 
+  test(){
+    return this.http.get('https://jsonplaceholder.typicode.com/albums')
+  }
+
   loadPhotos() {
     if (this.photosSubject.getValue().length) {
       return;
