@@ -23,6 +23,7 @@ export class PhotoCreateComponent implements OnInit {
   form: FormGroup;
   albums: Album[] = [];
   isEditMode = false;
+  photoId: number | undefined;
 
   constructor(private fb: FormBuilder,
               private photoService: PhotoService,
@@ -43,8 +44,8 @@ export class PhotoCreateComponent implements OnInit {
     this.isEditMode = !!this.route.snapshot.params["id"];
 
     if (this.isEditMode) {
-      const photoId = +this.route.snapshot.params["id"];
-      this.loadPhotoDetails(photoId);
+      this.photoId = +this.route.snapshot.params["id"];
+      this.loadPhotoDetails(this.photoId);
     }
 
     this.albumService.getAll().subscribe(albums => {
@@ -57,13 +58,20 @@ export class PhotoCreateComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    const photo: Photo = this.form.value;
 
+
+    console.log("PHOTO", photo);
     if (this.isEditMode) {
-      console.log(this.form.value)
+      this.photoService.updatePhoto(this.photoId!, photo).subscribe((photo) => {
+        console.log("UPDATE", photo);
+        this.snackBar.open("Photo successfully updated", "Close", {
+          duration: 2000,
+        });
+        this.router.navigate(["/photo", photo.id]);
+      });
+
     } else {
-
-
-      const photo: Photo = this.form.value;
       this.photoService.addPhoto(photo).subscribe((photo) => {
         console.log(photo);
         this.snackBar.open("Photo successfully created", "Close", {

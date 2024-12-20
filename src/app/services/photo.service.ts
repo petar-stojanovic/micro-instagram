@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, of, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, of, tap, throwError} from 'rxjs';
 import {Photo} from '../interfaces/photo';
 
 @Injectable({
@@ -23,7 +23,11 @@ export class PhotoService {
   }
 
   getPhoto(id: number) {
-    return this.http.get<Photo>(`${this.URL}/${id}`);
+    return this.getLocalPhoto(id).pipe(
+      catchError(e => {
+        return this.http.get<Photo>(`${this.URL}/${id}`);
+      })
+    );
   }
 
   getLocalPhoto(id: number) {
@@ -49,6 +53,19 @@ export class PhotoService {
       tap(newPhoto => {
         const photos = this.photosSubject.getValue();
         this.photosSubject.next([newPhoto, ...photos]);
+      })
+    );
+  }
+
+  updatePhoto(id: number, photo: Photo) {
+    return this.http.put<Photo>(`${this.URL}/${id}`, photo).pipe(
+      tap(updatedPhoto => {
+        const photos = this.photosSubject.getValue();
+        const index = photos.findIndex((photo) => photo.id === id);
+        if (index !== -1) {
+          photos[index] = {...photos[index], ...updatedPhoto};
+          this.photosSubject.next([...photos]);
+        }
       })
     );
   }

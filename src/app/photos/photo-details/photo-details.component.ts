@@ -28,30 +28,19 @@ export class PhotoDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params["id"];
-    if (id > 5000) {
-      this.photoService.getLocalPhoto(id)
-        .pipe(
-          catchError(err => {
-            this.error = true;
-            return EMPTY;
-          })
-        )
-        .subscribe(photo => {
-          this.photo = photo;
+
+    this.photoService.getPhoto(id)
+      .pipe(
+        catchError(err => {
+          this.error = true;
+          return EMPTY;
         })
-    } else {
-      this.photoService.getPhoto(id)
-        .pipe(
-          catchError(err => {
-            this.error = true;
-            return EMPTY;
-          })
-        )
-        .subscribe(photo => {
-          console.log(photo);
-          this.photo = photo;
-        })
-    }
+      )
+      .subscribe(photo => {
+        console.log(photo);
+        this.photo = photo;
+      })
+
   }
 
   deleteImage() {
