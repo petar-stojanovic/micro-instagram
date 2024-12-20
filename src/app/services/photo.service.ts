@@ -23,7 +23,7 @@ export class PhotoService {
   }
 
   getPhoto(id: number) {
-    return this.http.get(`${this.URL}/${id}`);
+    return this.http.get<Photo>(`${this.URL}/${id}`);
   }
 
 }
