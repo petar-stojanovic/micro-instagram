@@ -13,7 +13,12 @@ tr:hover {
   background-color: #f1f1f1;
 }
 
-mat-spinner{
+tr:has(th):hover {
+  background-color: #fff;
+  cursor: default;
+}
+
+mat-spinner {
   position: absolute;
   top: 50%;
   left: 50%;

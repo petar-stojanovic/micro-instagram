@@ -16,4 +16,8 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class ConfirmDeleteDialog {
   readonly dialogRef = inject(MatDialogRef<ConfirmDeleteDialog>);
+
+  confirm() {
+    this.dialogRef.close(true);
+  }
 }

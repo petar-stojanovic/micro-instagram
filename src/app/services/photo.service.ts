@@ -26,4 +26,7 @@ export class PhotoService {
     return this.http.get<Photo>(`${this.URL}/${id}`);
   }
 
+  deletePhoto(id: number) {
+    return this.http.delete<Photo>(`${this.URL}/${id}/delete`);
+  }
 }

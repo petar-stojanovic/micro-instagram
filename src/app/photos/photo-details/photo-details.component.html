@@ -1,5 +1,19 @@
 <div class="card-container">
-  @if (photo) {
+  @if (error) {
+    <mat-card class="card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Error</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          There was an error loading the photo.
+        </p>
+        <p>
+          <button mat-button color="primary" routerLink="/">Go Back</button>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  } @else if (photo) {
     <mat-card class="card" appearance="outlined">
       <mat-card-header>
         <div mat-card-avatar class="avatar" [style.background-image]="'url(' + photo.thumbnailUrl + ')'"></div>
