@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PhotoService} from '../services/photo.service';
-import {Photo} from '../interfaces/photo';
+import {PhotoService} from '../../services/photo.service';
+import {Photo} from '../../interfaces/photo';
 import {MatTableModule} from '@angular/material/table';
 import {RouterLink} from '@angular/router';
 import {Observable, tap} from 'rxjs';

@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
-import {PhotoListComponent} from './photo-list/photo-list.component';
-import {PhotoDetailsComponent} from './photo-details/photo-details.component';
+import {PhotoListComponent} from './photos/photo-list/photo-list.component';
+import {PhotoDetailsComponent} from './photos/photo-details/photo-details.component';
 
 export const routes: Routes = [
   {

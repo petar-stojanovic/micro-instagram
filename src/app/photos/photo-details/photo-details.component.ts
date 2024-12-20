@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
-import {PhotoService} from '../services/photo.service';
-import {Photo} from '../interfaces/photo';
+import {PhotoService} from '../../services/photo.service';
+import {Photo} from '../../interfaces/photo';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
