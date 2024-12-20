@@ -1,3 +1,8 @@
+<h1 class="header">
+  <span>Photo List</span>
+  <button mat-raised-button color="accent" [routerLink]="['/photo', 'create']">Add New Photo</button>
+</h1>
+
 @if (photos$ | async; as photos) {
 
   <table mat-table [dataSource]="photos" class="mat-elevation-z8">
