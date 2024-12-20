@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, tap} from 'rxjs';
+import {BehaviorSubject, of, tap, throwError} from 'rxjs';
 import {Photo} from '../interfaces/photo';
 
 @Injectable({
@@ -15,10 +15,6 @@ export class PhotoService {
   constructor(private http: HttpClient) {
   }
 
-  test(){
-    return this.http.get('https://jsonplaceholder.typicode.com/albums')
-  }
-
   loadPhotos() {
     if (this.photosSubject.getValue().length) {
       return;
@@ -30,12 +26,29 @@ export class PhotoService {
     return this.http.get<Photo>(`${this.URL}/${id}`);
   }
 
+  getLocalPhoto(id: number) {
+    const photo = this.photosSubject.getValue().find(photo => photo.id === id);
+    if (photo) {
+      return of(photo);
+    }
+    return throwError(() => new Error('Photo not found'));
+  }
+
   deletePhoto(id: number) {
     return this.http.delete<Photo>(`${this.URL}/${id}`).pipe(
       tap(() => {
         const photos = this.photosSubject.getValue();
         const filteredPhotos = photos.filter(photo => photo.id !== id);
         this.photosSubject.next(filteredPhotos);
+      })
+    );
+  }
+
+  addPhoto(photo: Photo) {
+    return this.http.post<Photo>(this.URL, photo).pipe(
+      tap(newPhoto => {
+        const photos = this.photosSubject.getValue();
+        this.photosSubject.next([newPhoto, ...photos]);
       })
     );
   }

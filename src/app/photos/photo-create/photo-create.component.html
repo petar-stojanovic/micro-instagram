@@ -1,1 +1,48 @@
-<p>photo-create works!</p>
+<div class="photo-create-container">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field  >
+      <mat-label>Photo Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter photo title"/>
+      @if (form.get('title')?.hasError('required')) {
+        <mat-error>Title is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Photo URL</mat-label>
+      <input matInput formControlName="url" placeholder="Enter photo URL"/>
+      @if (form.get('url')?.hasError('required')) {
+        <mat-error>URL is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Thumbnail URL</mat-label>
+      <input matInput formControlName="thumbnailUrl" placeholder="Enter thumbnail URL"/>
+
+      @if (form.get('thumbnailUrl')?.hasError('required')) {
+        <mat-error>Thumbnail URL is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select Album</mat-label>
+      <mat-select formControlName="albumId">
+        <mat-option value="">--</mat-option>
+        @for (album of albums; track album.id) {
+          <mat-option value="{{ album.id }}">{{ album.title }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button routerLink="/">
+        Go Back
+      </button>
+      <button mat-raised-button color="primary" [disabled]="form.invalid">
+        Add Photo
+      </button>
+    </div>
+  </form>
+</div>
