@@ -1,20 +1,17 @@
 .card-container {
   padding: 2rem 0;
-  max-width: 40rem;
-  min-height: 20rem;
+  max-width: 30rem;
+  min-height: 15rem;
   margin: 0 auto;
 
   position: relative;
 }
 
-.card {
-}
-
 .image {
-  min-height: 20rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 0.5rem;
 }
 
 mat-spinner {
@@ -24,11 +21,13 @@ mat-spinner {
   transform: translate(-50%, -50%);
 }
 
-mat-card-header {
-  //display: flex;
-  //align-items: center;
-}
 
 mat-card-content {
   margin-top: 1rem;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
