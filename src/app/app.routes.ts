@@ -13,6 +13,10 @@ export const routes: Routes = [
     component: PhotoCreateComponent,
   },
   {
+    path: 'photo/:id/edit',
+    component: PhotoCreateComponent
+  },
+  {
     path: 'photo/:id',
     component: PhotoDetailsComponent
   },

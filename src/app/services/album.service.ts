@@ -16,4 +16,7 @@ export class AlbumService {
     return this.http.get<Album[]>(this.URL)
   }
 
+  getById(albumId: number) {
+    return this.http.get<Album>(`${this.URL}/${albumId}`);
+  }
 }

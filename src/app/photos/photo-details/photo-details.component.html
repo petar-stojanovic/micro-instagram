@@ -27,7 +27,9 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-flat-button color="primary">Edit</button>
+        <a [routerLink]="['/photo',photo.id,'edit']">
+          <button mat-flat-button color="primary">Edit</button>
+        </a>
         <button mat-flat-button color="warn" (click)="deleteImage()">Delete</button>
       </mat-card-actions>
     </mat-card>

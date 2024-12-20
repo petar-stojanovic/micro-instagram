@@ -1,11 +1,15 @@
 <h1>
-  <span>Add New Photo</span>
+  @if (isEditMode) {
+    Edit Photo
+  } @else {
+    Add New Photo
+  }
 </h1>
 
 <div class="photo-create-container">
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field  >
+    <mat-form-field>
       <mat-label>Photo Title</mat-label>
       <input matInput formControlName="title" placeholder="Enter photo title"/>
       @if (form.get('title')?.hasError('required')) {
@@ -45,7 +49,11 @@
         Go Back
       </button>
       <button mat-raised-button color="primary" [disabled]="form.invalid">
-        Add Photo
+        @if (isEditMode) {
+          Edit Photo
+        } @else {
+          Add Photo
+        }
       </button>
     </div>
   </form>
