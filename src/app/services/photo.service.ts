@@ -10,8 +10,9 @@ export class PhotoService {
   private readonly URL = 'https://jsonplaceholder.typicode.com/photos';
 
   private photosSubject = new BehaviorSubject<Photo[]>([]);
+  private allPhotosSubject = new BehaviorSubject<Photo[]>([]);
   photos$ = this.photosSubject.asObservable();
-  allPhotos :Photo[] = [];
+  allPhotos$ = this.allPhotosSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -21,7 +22,7 @@ export class PhotoService {
       return;
     }
     this.http.get<Photo[]>(this.URL).subscribe(photos => {
-      this.allPhotos = photos;
+      this.allPhotosSubject.next(photos);
       this.photosSubject.next(photos.slice(0, 50))
     });
   }
