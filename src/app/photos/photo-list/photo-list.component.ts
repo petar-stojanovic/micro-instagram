@@ -43,7 +43,7 @@ export class PhotoListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.photoSub = this.photoService.allPhotos$.subscribe((photos) => {
+    this.photoSub = this.photoService.photos$.subscribe((photos) => {
       this.dataSource.data = (photos);
     })
 

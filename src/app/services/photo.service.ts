@@ -22,8 +22,9 @@ export class PhotoService {
       return;
     }
     this.http.get<Photo[]>(this.URL).subscribe(photos => {
-      this.allPhotosSubject.next(photos);
-      this.photosSubject.next(photos.slice(0, 50))
+      // this.allPhotosSubject.next(photos);
+      this.photosSubject.next(photos);
+      // this.photosSubject.next(photos.slice(0, 50))
     });
   }
 
