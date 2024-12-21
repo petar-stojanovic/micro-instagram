@@ -11,6 +11,7 @@ export class PhotoService {
 
   private photosSubject = new BehaviorSubject<Photo[]>([]);
   photos$ = this.photosSubject.asObservable();
+  allPhotos :Photo[] = [];
 
   constructor(private http: HttpClient) {
   }
@@ -19,7 +20,10 @@ export class PhotoService {
     if (this.photosSubject.getValue().length) {
       return;
     }
-    this.http.get<Photo[]>(this.URL).subscribe(photos => this.photosSubject.next(photos.slice(0, 50)));
+    this.http.get<Photo[]>(this.URL).subscribe(photos => {
+      this.allPhotos = photos;
+      this.photosSubject.next(photos.slice(0, 50))
+    });
   }
 
   getPhoto(id: number) {

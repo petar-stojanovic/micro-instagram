@@ -8,6 +8,9 @@
 
 @if (photos$ | async; as photos) {
 
+  <app-search/>
+
+
   <table mat-table [dataSource]="photos" class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">

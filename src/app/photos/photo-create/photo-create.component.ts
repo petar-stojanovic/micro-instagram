@@ -62,8 +62,6 @@ export class PhotoCreateComponent implements OnInit {
     }
     const photo: Photo = this.form.value;
 
-
-    console.log("PHOTO", photo);
     if (this.isEditMode) {
       this.photoService.updatePhoto(this.photoId!, photo).subscribe((photo) => {
         this.snackBar.open("Photo successfully updated", "Close", {

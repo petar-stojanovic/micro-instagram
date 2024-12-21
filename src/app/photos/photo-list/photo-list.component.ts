@@ -7,6 +7,7 @@ import {Observable, tap} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButtonModule} from '@angular/material/button';
+import {SearchComponent} from '../search/search.component';
 
 @Component({
   selector: 'app-photo-list',
@@ -15,7 +16,8 @@ import {MatButtonModule} from '@angular/material/button';
     RouterLink,
     AsyncPipe,
     MatProgressSpinner,
-    MatButtonModule
+    MatButtonModule,
+    SearchComponent
   ],
   templateUrl: './photo-list.component.html',
   styleUrl: './photo-list.component.scss'
