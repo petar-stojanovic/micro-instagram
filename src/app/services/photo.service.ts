@@ -38,10 +38,10 @@ export class PhotoService {
 
   getLocalPhoto(id: number) {
     const photo = this.photosSubject.getValue().find(photo => photo.id === id);
-    if (photo) {
-      return of(photo);
-    }
-    return throwError(() => new Error('Photo not found'));
+
+    return photo
+      ? of(photo)
+      : throwError(() => new Error('Photo not found'));
   }
 
   deletePhoto(id: number) {

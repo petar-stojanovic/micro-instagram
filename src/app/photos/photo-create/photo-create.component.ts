@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PhotoService} from '../../services/photo.service';
 import {AlbumService} from '../../services/album.service';
@@ -10,7 +10,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Photo} from '../../interfaces/photo';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {catchError, forkJoin, switchMap} from 'rxjs';
+import {catchError, forkJoin} from 'rxjs';
 import {MatCardModule} from '@angular/material/card';
 
 @Component({
