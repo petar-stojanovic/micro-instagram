@@ -35,6 +35,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/photo', row.id]"></tr>
   </table>
 
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
 } @else {
   <mat-spinner></mat-spinner>
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PhotoService} from '../../services/photo.service';
 import {Photo} from '../../interfaces/photo';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -8,6 +8,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButtonModule} from '@angular/material/button';
 import {SearchComponent} from '../search/search.component';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-photo-list',
@@ -17,13 +18,13 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
     MatSortModule,
     MatProgressSpinner,
     MatButtonModule,
-    SearchComponent
+    SearchComponent,
+    MatPaginatorModule
   ],
   templateUrl: './photo-list.component.html',
   styleUrl: './photo-list.component.scss'
 })
-export class PhotoListComponent implements OnInit, OnDestroy {
-  // photos$!: Observable<Photo[]>;
+export class PhotoListComponent implements OnInit, OnDestroy, AfterViewInit {
   photoSub: Subscription | undefined;
 
   displayedColumns = [
@@ -33,8 +34,9 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   ]
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  dataSource: MatTableDataSource<Photo> | undefined;
+  dataSource = new MatTableDataSource<Photo>([]);
 
   constructor(private photoService: PhotoService,
               private route: ActivatedRoute) {
@@ -42,16 +44,20 @@ export class PhotoListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.photoSub = this.photoService.allPhotos$.subscribe((photos) => {
-      this.dataSource = new MatTableDataSource<Photo>(photos);
-      this.dataSource.sort = this.sort;
+      this.dataSource.data = (photos);
     })
 
     this.route.queryParams.subscribe(params => {
-      const query = params['query'];
-      this.dataSource!.filter = query.trim().toLowerCase();
+      const query = params['query'] || '';
+      this.dataSource.filter = query.trim().toLowerCase();
     })
 
     this.photoService.loadPhotos();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
 
