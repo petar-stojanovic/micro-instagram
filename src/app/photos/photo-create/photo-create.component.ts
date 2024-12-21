@@ -66,7 +66,6 @@ export class PhotoCreateComponent implements OnInit {
     console.log("PHOTO", photo);
     if (this.isEditMode) {
       this.photoService.updatePhoto(this.photoId!, photo).subscribe((photo) => {
-        console.log("UPDATE", photo);
         this.snackBar.open("Photo successfully updated", "Close", {
           duration: 2000,
         });
@@ -75,7 +74,6 @@ export class PhotoCreateComponent implements OnInit {
 
     } else {
       this.photoService.addPhoto(photo).subscribe((photo) => {
-        console.log(photo);
         this.snackBar.open("Photo successfully created", "Close", {
           duration: 2000,
         });
