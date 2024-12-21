@@ -58,13 +58,21 @@ export class PhotoService {
   }
 
   updatePhoto(id: number, photo: Photo) {
+    const photoToUpdate = this.photosSubject.getValue().find(photo => photo.id === id);
+    if (photoToUpdate) {
+      const updatedPhoto = {...photoToUpdate, ...photo};
+      const updatedPhotos = this.photosSubject.getValue().map(photo => photo.id === id ? updatedPhoto : photo);
+      this.photosSubject.next(updatedPhotos);
+      return of(updatedPhoto);
+    }
+
     return this.http.put<Photo>(`${this.URL}/${id}`, photo).pipe(
       tap(updatedPhoto => {
-        const photos = this.photosSubject.getValue();
-        const index = photos.findIndex((photo) => photo.id === id);
-        if (index !== -1) {
-          photos[index] = {...photos[index], ...updatedPhoto};
-          this.photosSubject.next([...photos]);
+        const photoToUpdate = this.photosSubject.getValue().find(photo => photo.id === id);
+        if (photoToUpdate) {
+          const updatedLocalPhoto = {...photoToUpdate, ...updatedPhoto};
+          const updatedPhotos = this.photosSubject.getValue().map(photo => photo.id === id ? updatedLocalPhoto : photo);
+          this.photosSubject.next(updatedPhotos);
         }
       })
     );

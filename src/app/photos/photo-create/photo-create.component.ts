@@ -48,11 +48,11 @@ export class PhotoCreateComponent implements OnInit {
     if (this.isEditMode) {
       this.photoId = +this.route.snapshot.params["id"];
       this.loadPhotoDetails(this.photoId);
+    } else {
+      this.albumService.getAll().subscribe(albums => {
+        this.albums = albums;
+      });
     }
-
-    this.albumService.getAll().subscribe(albums => {
-      this.albums = albums;
-    });
   }
 
 
