@@ -32,7 +32,6 @@ export class SearchComponent implements OnInit {
         debounceTime(400),
         distinctUntilChanged()
       ).subscribe(query => {
-      console.log("query", query);
       this.router.navigate(['/'], {
         queryParams: {query}
       })
